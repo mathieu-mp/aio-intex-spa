@@ -11,6 +11,7 @@ jobs:
     name: Deploy to PyPi
     steps:
       - uses: actions/checkout@v1
+
       - name: Set up Python
         uses: actions/setup-python@v1
         with:
@@ -23,12 +24,14 @@ jobs:
 
       - run: python3 -m pytest
 
-      - uses: olegtarasov/get-tag@v2
-        name: Set tag envronment variable
+      - name: Set tag as environment variable
+        uses: olegtarasov/get-tag@v2.1
+        id: tagName
 
       - name: Set version number
         run: |
           sed -i "s/version=\"0.0.0\"/version=\"$GIT_TAG_NAME\"/" ${{github.workspace}}/setup.py
+
       - name: Publish to PyPi
         env:
           TWINE_USERNAME: __token__

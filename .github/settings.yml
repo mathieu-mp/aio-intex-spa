@@ -1,25 +1,71 @@
+# These settings are synced to GitHub by https://probot.github.io/apps/settings/
+# See https://docs.github.com/en/rest/repos/repos#update-a-repository for all available settings.
+
 repository:
-  description: "Sample Client lib."
-  homepage: https://pypi.org/project/sampleclient/
+  # A short description of the repository that will show up on GitHub
+  description: "Python package for Intex Spa wifi client"
+
+  # A URL with more information about the repository
+  homepage: https://pypi.org/project/intex-spa/
+
+  # A comma-separated list of topics to set on the repository
+  topics: intex, spa, purespa, intexspa, wifi, asyncio
+
+  # Either `true` to make the repository private, or `false` to make it public.
   private: false
+
+  # Either `true` to enable issues for this repository, `false` to disable them.
   has_issues: true
+
+  # Either `true` to enable projects for this repository, or `false` to disable them.
+  # If projects are disabled for the organization, passing `true` will cause an API error.
   has_projects: false
+
+  # Either `true` to enable the wiki for this repository, `false` to disable it.
   has_wiki: false
-  has_downloads: false
-  default_branch: master
+
+  # Either `true` to enable downloads for this repository, `false` to disable them.
+  has_downloads: true
+
+  # Updates the default branch for this repository.
+  default_branch: main
+
+  # Either `true` to allow squash-merging pull requests, or `false` to prevent
+  # squash-merging.
   allow_squash_merge: true
+
+  # Either `true` to allow merging pull requests with a merge commit, or `false`
+  # to prevent merging pull requests with merge commits.
   allow_merge_commit: false
-  allow_rebase_merge: false
+
+  # Either `true` to allow rebase-merging pull requests, or `false` to prevent
+  # rebase-merging.
+  allow_rebase_merge: true
+
+  # Either `true` to enable automatic deletion of branches on merge, or `false` to disable
+  delete_branch_on_merge: true
+
+  # Either `true` to enable automated security fixes, or `false` to disable automated security fixes
+  enable_automated_security_fixes: true
+
+  # Either `true` to enable vulnerability alerts, or `false` to disable vulnerability alerts
+  enable_vulnerability_alerts: true
+
 labels:
   - name: "Feature Request"
     color: "fbca04"
+
   - name: "Bug"
     color: "b60205"
+
   - name: "Wont Fix"
     color: "ffffff"
+
   - name: "Enhancement"
     color: "a2eeef"
+
   - name: "Documentation"
     color: "008672"
+
   - name: "Stale"
     color: "930191"

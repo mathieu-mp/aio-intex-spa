@@ -1,5 +1,5 @@
 {
-	"image": "ludeeus/container:python",
+	"image": "mcr.microsoft.com/vscode/devcontainers/python",
 	"context": "..",
 	"postCreateCommand": "python3 setup.py develop",
 	"runArgs": [
@@ -8,6 +8,7 @@
 	],
 	"extensions": [
 		"ms-python.python",
+		"ms-python.pylint",
 		"github.vscode-pull-request-github",
 		"tabnine.tabnine-vscode"
 	],
