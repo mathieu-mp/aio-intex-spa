@@ -56,6 +56,10 @@ asyncio.run(use_intex_spa())
 
 This python package follows semantic versioning specification (SemVer).
 
+### 0.1.2 - 2022-06-04
+
+✨ First release to PyPI
+
 ### 0.1.0 - 2022-06-04
 
 ✨ First release
