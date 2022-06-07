@@ -19,7 +19,6 @@ It uses direct TCP connection to the spa, and does not require access to the Int
 
 It is written with asyncio network functions. It only supports asyncio usage.
 
-
 ## User installation
 
 ```bash
@@ -28,7 +27,7 @@ python3 -m pip install -U intex-spa
 
 ## Usage examples
 
-Below are some examples, see `tests` directory for more examples
+Below are some examples, see `examples` directory for more delight.
 
 ### Retrieve spa status
 ```python
@@ -54,7 +53,9 @@ asyncio.run(use_intex_spa())
 
 ## Changelog
 
-This python package follows semantic versioning specification (SemVer).
+This python package follows Semantic Versioning 2.0.0
+
+***Reminder**: Major version zero (0.y.z) is for initial development. Anything MAY change at any time. The public API SHOULD NOT be considered stable.*
 
 ### 0.1.2 - 2022-06-04
 
