@@ -1,5 +1,5 @@
 {
-	"image": "mcr.microsoft.com/vscode/devcontainers/python",
+	"image": "mcr.microsoft.com/vscode/devcontainers/python:0-3.9",
 	"context": "..",
 	"postCreateCommand": "python3 setup.py develop",
 	"runArgs": [
