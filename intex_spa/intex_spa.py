@@ -3,6 +3,8 @@ import logging
 import time
 import asyncio
 
+import typing
+
 from .intex_spa_network_layer import IntexSpaNetworkLayer
 from .intex_spa_query import IntexSpaQuery
 from .intex_spa_status import IntexSpaStatus
@@ -44,7 +46,7 @@ class IntexSpa:
         self.is_available: bool = None
 
     async def _async_handle_intent(
-        self, intent: str = "status", expected_state: bool | int = None
+        self, intent: str = "status", expected_state: typing.Union[bool, int] = None
     ) -> IntexSpaStatus:
         """
         Handle any intent by conversing with the spa wifi module
