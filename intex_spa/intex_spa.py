@@ -42,6 +42,23 @@ class IntexSpa:
         _LOGGER.warning("Initializing IntexSpa instance")
         self.network = IntexSpaNetworkLayer(address, port)
         self.status = IntexSpaStatus()
+        self.platforms = {
+            "switches": [
+                "power",
+                "filter",
+                "jets",
+                "bubbles",
+                "sanitizer",
+            ],
+            "climates": [
+                {
+                    "unit": "unit",
+                    "current_temp": "current_temp",
+                    "preset_temp": "preset_temp",
+                    "heater": "heater",
+                },
+            ],
+        }
         self.last_successful_update_ms: int = None
         self.is_available: bool = None
 
