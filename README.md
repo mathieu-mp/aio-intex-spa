@@ -31,7 +31,7 @@ Below are some examples, see `examples` directory for more delight.
 
 ### Retrieve spa status
 ```python
-import asyncio
+from intex_spa import IntexSpa
 
 async def use_intex_spa():
     intex_spa = IntexSpa(SPA_ADDRESS)
@@ -42,7 +42,7 @@ asyncio.run(use_intex_spa())
 
 ### Set spa function state
 ```python
-import asyncio
+from intex_spa import IntexSpa
 
 async def use_intex_spa():
     intex_spa = IntexSpa(SPA_ADDRESS)
@@ -56,6 +56,11 @@ asyncio.run(use_intex_spa())
 This python package follows Semantic Versioning 2.0.0
 
 ***Reminder**: Major version zero (0.y.z) is for initial development. Anything MAY change at any time. The public API SHOULD NOT be considered stable.*
+
+### 0.4.0 - 2022-06-18
+
+Add "direct" async_set method to IntexSpa class \
+Remove platforms parameter to IntexSpa class
 
 ### 0.3.0 - 2022-06-18
 
