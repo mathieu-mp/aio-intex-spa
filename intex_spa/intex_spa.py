@@ -155,6 +155,19 @@ class IntexSpa:
         """
         return await self._async_handle_intent("status")
 
+    async def async_set(
+        self, parameter: str, expected_state: bool = True
+    ) -> IntexSpaStatus:
+        """
+        Set specified parameter to `expected_state`
+
+        Returns
+        -------
+        status : IntexSpaStatus
+            The updated spa status
+        """
+        return await self._async_handle_intent(parameter, expected_state)
+
     async def async_set_power(self, expected_state: bool = True) -> IntexSpaStatus:
         """
         Set power function to `expected_state`
@@ -164,7 +177,7 @@ class IntexSpa:
         status : IntexSpaStatus
             The updated spa status
         """
-        return await self._async_handle_intent("power", expected_state)
+        return await self.async_set("power", expected_state)
 
     async def async_set_filter(self, expected_state: bool = True) -> IntexSpaStatus:
         """
@@ -175,7 +188,7 @@ class IntexSpa:
         status : IntexSpaStatus
             The updated spa status
         """
-        return await self._async_handle_intent("filter", expected_state)
+        return await self.async_set("filter", expected_state)
 
     async def async_set_heater(self, expected_state: bool = True) -> IntexSpaStatus:
         """
@@ -186,7 +199,7 @@ class IntexSpa:
         status : IntexSpaStatus
             The updated spa status
         """
-        return await self._async_handle_intent("heater", expected_state)
+        return await self.async_set("heater", expected_state)
 
     async def async_set_jets(self, expected_state: bool = True) -> IntexSpaStatus:
         """
@@ -197,7 +210,7 @@ class IntexSpa:
         status : IntexSpaStatus
             The updated spa status
         """
-        return await self._async_handle_intent("jets", expected_state)
+        return await self.async_set("jets", expected_state)
 
     async def async_set_bubbles(self, expected_state: bool = True) -> IntexSpaStatus:
         """
@@ -208,7 +221,7 @@ class IntexSpa:
         status : IntexSpaStatus
             The updated spa status
         """
-        return await self._async_handle_intent("bubbles", expected_state)
+        return await self.async_set("bubbles", expected_state)
 
     async def async_set_sanitizer(self, expected_state: bool = True) -> IntexSpaStatus:
         """
@@ -219,7 +232,7 @@ class IntexSpa:
         status : IntexSpaStatus
             The updated spa status
         """
-        return await self._async_handle_intent("sanitizer", expected_state)
+        return await self.async_set("sanitizer", expected_state)
 
     async def async_set_preset_temp(self, expected_state: int) -> IntexSpaStatus:
         """
