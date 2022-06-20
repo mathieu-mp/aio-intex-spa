@@ -57,7 +57,7 @@ This python package follows Semantic Versioning 2.0.0
 
 ***Reminder**: Major version zero (0.y.z) is for initial development. Anything MAY change at any time. The public API SHOULD NOT be considered stable.*
 
-### 0.4.0 - 2022-06-18
+### 0.4.1 - 2022-06-20
 
 Handle concurrent requests sequentially
 
