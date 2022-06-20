@@ -59,6 +59,10 @@ This python package follows Semantic Versioning 2.0.0
 
 ### 0.4.0 - 2022-06-18
 
+Handle concurrent requests sequentially
+
+### 0.4.0 - 2022-06-18
+
 Add "direct" async_set method to IntexSpa class \
 Remove platforms parameter to IntexSpa class
 
