@@ -69,7 +69,6 @@ class IntexSpaStatus:
     def current_temp(self) -> typing.Union[int, bool]:
         """Current temperature of the water, expressed in `unit`"""
         raw_current_temp = (self._raw_status >> 88) & 0xFF
-        print(raw_current_temp)
 
         # If current_temp encodes a temperature, return the temperature
         if raw_current_temp < 181:
