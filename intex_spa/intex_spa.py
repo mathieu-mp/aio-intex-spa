@@ -2,7 +2,6 @@
 import logging
 import time
 import asyncio
-
 import typing
 
 from .intex_spa_network_layer import IntexSpaNetworkLayer

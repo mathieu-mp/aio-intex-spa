@@ -1,5 +1,6 @@
 """IntexSpaStatus"""
 import logging
+import typing
 
 _LOGGER = logging.getLogger(__name__)
 
@@ -65,9 +66,30 @@ class IntexSpaStatus:
             return "°F"
 
     @property
-    def current_temp(self) -> int:
+    def current_temp(self) -> typing.Union[int, bool]:
         """Current temperature of the water, expressed in `unit`"""
-        return (self._raw_status >> 88) & 0xFF
+        raw_current_temp = (self._raw_status >> 88) & 0xFF
+        print(raw_current_temp)
+
+        # If current_temp encodes a temperature, return the temperature
+        if raw_current_temp < 181:
+            return raw_current_temp
+        # Else if current_temp encodes an error (E81, ...), return False
+        else:
+            return False
+
+    @property
+    def error_code(self) -> typing.Union[int, bool]:
+        """Current error code of the spa"""
+        raw_current_temp = (self._raw_status >> 88) & 0xFF
+
+        # If current_temp encodes an error (E81, ...), return the error code
+        if raw_current_temp >= 181:
+            error_no = raw_current_temp - 100
+            return f"E{error_no}"
+        # Else if current_temp encodes a temperature, return False
+        else:
+            return False
 
     @property
     def preset_temp(self) -> int:
@@ -117,6 +139,7 @@ class IntexSpaStatus:
             "unit": self.unit,
             "current_temp": self.current_temp,
             "preset_temp": self.preset_temp,
+            "error_code": self.error_code,
         }
 
     def __repr__(self) -> str:
