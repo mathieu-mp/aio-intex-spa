@@ -1,12 +1,12 @@
 """IntexSpa"""
 import logging
-import time
 import asyncio
 import typing
 
 from .intex_spa_network_layer import IntexSpaNetworkLayer
 from .intex_spa_query import IntexSpaQuery
 from .intex_spa_status import IntexSpaStatus
+from .intex_spa_exceptions import IntexSpaUnreachableException
 
 _LOGGER = logging.getLogger(__name__)
 
@@ -21,10 +21,6 @@ class IntexSpa:
       The network layer object for communications with intex spa wifi module
     status : IntexSpaStatus
       The status object of the spa
-    last_successful_update_ms : int
-      The millisecond timestamp of the last successful update
-    is_reachable : bool
-      Is the spa wifi module available
     """
 
     def __init__(self, address: str = "SPA_DEVICE", port: str = "8990"):
@@ -41,8 +37,6 @@ class IntexSpa:
         _LOGGER.warning("Initializing IntexSpa instance")
         self.network = IntexSpaNetworkLayer(address, port)
         self.status = IntexSpaStatus()
-        self.last_successful_update_ms: int = None
-        self.is_reachable: bool = None
         self._semaphore = asyncio.Semaphore(1)
 
     async def _async_handle_intent(
@@ -112,13 +106,11 @@ class IntexSpa:
                         # And update the status object with it
                         self.status = query.response_status
 
-                        # Set availability info
-                        self.last_successful_update_ms = int(time.time() * 1000)
-                        self.is_reachable = True
                     except (AssertionError,):
                         _LOGGER.info("Malformed spa response during spa querying")
                         await asyncio.sleep(2)
                         continue
+
                     except (
                         asyncio.IncompleteReadError,
                         asyncio.TimeoutError,
@@ -131,19 +123,15 @@ class IntexSpa:
                         await self.network.async_force_reconnect()
                         await asyncio.sleep(2)
                         continue
+
                     else:
                         break
                 else:  # No retry has succeeded
                     _LOGGER.info("Spa is unreachable")
-                    # Set unavailability info
-                    self.is_reachable = False
                     self.status = IntexSpaStatus()
+                    raise IntexSpaUnreachableException("Spa is unreachable")
 
-        return {
-            "status": self.status,
-            "is_reachable": self.is_reachable,
-            "last_successful_update_ms": self.last_successful_update_ms,
-        }
+        return self.status
 
     async def async_update_status(self) -> IntexSpaStatus:
         """Update known status of the spa

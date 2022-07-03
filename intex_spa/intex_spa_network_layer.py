@@ -1,6 +1,9 @@
 """IntexSpa"""
 import logging
 import asyncio
+import socket
+
+from .intex_spa_exceptions import IntexSpaDnsException
 
 _LOGGER = logging.getLogger(__name__)
 
@@ -45,9 +48,19 @@ class IntexSpaNetworkLayer:
             self.address,
             self.port,
         )
-        self.reader, self.writer = await asyncio.open_connection(
-            self.address, self.port
-        )
+        try:
+            self.reader, self.writer = await asyncio.open_connection(
+                self.address, self.port
+            )
+
+        except socket.gaierror as err:
+            if err.args[0] == socket.EAI_NONAME:
+                raise IntexSpaDnsException(
+                    f"Cannot resolve DNS address for {self.address}"
+                ) from err
+            else:
+                raise socket.gaierror from err
+
         _LOGGER.info(
             "TCP connection established with the spa",
         )
