@@ -59,7 +59,7 @@ class IntexSpaNetworkLayer:
                     f"Cannot resolve DNS address for {self.address}"
                 ) from err
             else:
-                raise socket.gaierror from err
+                raise socket.gaierror(err) from err
 
         _LOGGER.info(
             "TCP connection established with the spa",
