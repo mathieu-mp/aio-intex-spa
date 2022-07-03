@@ -18,13 +18,13 @@ class IntexSpa:
     Attributes
     -------
     network : IntexSpaNetworkLayer
-        The network layer object for communications with intex spa wifi module
+      The network layer object for communications with intex spa wifi module
     status : IntexSpaStatus
-        The status object of the spa
+      The status object of the spa
     last_successful_update_ms : int
-        The millisecond timestamp of the last successful update
-    is_available : bool
-        Is the spa wifi module available
+      The millisecond timestamp of the last successful update
+    is_reachable : bool
+      Is the spa wifi module available
     """
 
     def __init__(self, address: str = "SPA_DEVICE", port: str = "8990"):
@@ -34,15 +34,15 @@ class IntexSpa:
         Parameters
         ----------
         address : str, default = "SPA_DEVICE"
-            The fqdn or IP of the intex spa wifi module
+          The fqdn or IP of the intex spa wifi module
         port : str, default = "8990"
-            The TCP service port the intex spa wifi module
+          The TCP service port the intex spa wifi module
         """
         _LOGGER.warning("Initializing IntexSpa instance")
         self.network = IntexSpaNetworkLayer(address, port)
         self.status = IntexSpaStatus()
         self.last_successful_update_ms: int = None
-        self.is_available: bool = None
+        self.is_reachable: bool = None
         self._semaphore = asyncio.Semaphore(1)
 
     async def _async_handle_intent(
@@ -63,14 +63,14 @@ class IntexSpa:
         Parameters
         ----------
         intent : str
-            The intent to handle (i.e.: "status", "heater", "preset_temp", ...)
+          The intent to handle (i.e.: "status", "heater", "preset_temp", ...)
         expected_state : bool | int, optional
-            The expected state of the function or the temperature preset
+          The expected state of the function or the temperature preset
 
         Returns
         -------
         status : IntexSpaStatus
-            The status of the spa
+          The status of the spa
         """
 
         _LOGGER.debug("'%s' intent: Handling new intent...", intent)
@@ -87,13 +87,14 @@ class IntexSpa:
             if (
                 # the provided intent is an update status
                 intent == "status"
-                # the provided intent is a command and its expected_state differs from the current state
+                # the provided intent is a command
+                # and its expected_state differs from the current state
                 or getattr(self.status, intent) != expected_state
             ):
                 _LOGGER.debug("'%s' intent: a spa query is needed", intent)
 
-                # Attempt maximum 5 times
-                for _ in range(5):
+                # Attempt maximum 3 times
+                for _ in range(3):
                     try:
                         _LOGGER.debug("'%s' intent: new spa query", intent)
                         # Initialize a query to the spa
@@ -104,7 +105,8 @@ class IntexSpa:
 
                         # Receive the raw response bytes via the network object
                         received_bytes = await self.network.async_receive()
-                        # Give the raw received_bytes back to the query object to render the new status
+                        # Give the raw received_bytes back to the query object
+                        # to render the new status
                         query.render_response_status(received_bytes)
                         _LOGGER.debug("'%s' intent: new status is rendered", intent)
                         # And update the status object with it
@@ -112,23 +114,36 @@ class IntexSpa:
 
                         # Set availability info
                         self.last_successful_update_ms = int(time.time() * 1000)
-                        self.is_available = True
+                        self.is_reachable = True
+                    except (AssertionError,):
+                        _LOGGER.info("Malformed spa response during spa querying")
+                        await asyncio.sleep(2)
+                        continue
                     except (
-                        asyncio.TimeoutError,
                         asyncio.IncompleteReadError,
-                        AssertionError,
+                        asyncio.TimeoutError,
+                        ConnectionRefusedError,
+                        ConnectionResetError,
+                        ConnectionError,
+                        OSError,
                     ):
-                        _LOGGER.warning("Exception raised during spa querying")
+                        _LOGGER.info("Network raised an exception during spa querying")
+                        await self.network.async_force_reconnect()
                         await asyncio.sleep(2)
                         continue
                     else:
                         break
                 else:  # No retry has succeeded
+                    _LOGGER.info("Spa is unreachable")
                     # Set unavailability info
+                    self.is_reachable = False
                     self.status = IntexSpaStatus()
-                    self.is_available = False
 
-        return self.status
+        return {
+            "status": self.status,
+            "is_reachable": self.is_reachable,
+            "last_successful_update_ms": self.last_successful_update_ms,
+        }
 
     async def async_update_status(self) -> IntexSpaStatus:
         """Update known status of the spa
@@ -136,7 +151,7 @@ class IntexSpa:
         Returns
         -------
         status : IntexSpaStatus
-            The updated spa status
+          The updated spa status
         """
         return await self._async_handle_intent("status")
 
@@ -149,7 +164,7 @@ class IntexSpa:
         Returns
         -------
         status : IntexSpaStatus
-            The updated spa status
+          The updated spa status
         """
         return await self._async_handle_intent(parameter, expected_state)
 
@@ -160,7 +175,7 @@ class IntexSpa:
         Returns
         -------
         status : IntexSpaStatus
-            The updated spa status
+          The updated spa status
         """
         return await self.async_set("power", expected_state)
 
@@ -171,7 +186,7 @@ class IntexSpa:
         Returns
         -------
         status : IntexSpaStatus
-            The updated spa status
+          The updated spa status
         """
         return await self.async_set("filter", expected_state)
 
@@ -182,7 +197,7 @@ class IntexSpa:
         Returns
         -------
         status : IntexSpaStatus
-            The updated spa status
+          The updated spa status
         """
         return await self.async_set("heater", expected_state)
 
@@ -193,7 +208,7 @@ class IntexSpa:
         Returns
         -------
         status : IntexSpaStatus
-            The updated spa status
+          The updated spa status
         """
         return await self.async_set("jets", expected_state)
 
@@ -204,7 +219,7 @@ class IntexSpa:
         Returns
         -------
         status : IntexSpaStatus
-            The updated spa status
+          The updated spa status
         """
         return await self.async_set("bubbles", expected_state)
 
@@ -215,7 +230,7 @@ class IntexSpa:
         Returns
         -------
         status : IntexSpaStatus
-            The updated spa status
+          The updated spa status
         """
         return await self.async_set("sanitizer", expected_state)
 
@@ -226,6 +241,6 @@ class IntexSpa:
         Returns
         -------
         status : IntexSpaStatus
-            The updated spa status
+          The updated spa status
         """
         return await self._async_handle_intent("preset_temp", expected_state)
