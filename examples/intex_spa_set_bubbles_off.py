@@ -1,3 +1,4 @@
+"""Usage example file"""
 import os
 import logging
 import asyncio
@@ -13,7 +14,7 @@ async def example_intex_spa():
     """Example for intex_spa"""
     intex_spa = IntexSpa(SPA_ADDRESS)
 
-    await intex_spa.async_set_bubbles(False)
+    print(await intex_spa.async_set_bubbles(False))
 
 
 asyncio.run(example_intex_spa())

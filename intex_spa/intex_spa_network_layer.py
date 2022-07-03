@@ -54,14 +54,19 @@ class IntexSpaNetworkLayer:
 
     async def _async_disconnect(self) -> None:
         """Close the connection to the spa"""
-        _LOGGER.debug(
-            "Closing TCP connection to the spa with asyncio",
-        )
-        self.writer.close()
-        await self.writer.wait_closed()
-        _LOGGER.info(
-            "TCP connection closed with the spa",
-        )
+        # If there is a writer to send a disconnect message
+        if self.writer is not None:
+            _LOGGER.debug("Closing TCP connection to the spa with asyncio")
+            self.writer.close()
+            await self.writer.wait_closed()
+            _LOGGER.info("TCP connection closed with the spa")
+
+        self.reader = None
+        self.writer = None
+
+    async def async_force_reconnect(self) -> None:
+        """Force reconnecting to the spa"""
+        await self._async_disconnect()
 
     async def async_send(self, bytes_to_write: bytes = None) -> None:
         """Send command to the spa"""

@@ -128,18 +128,33 @@ class IntexSpaStatus:
         status_attributes : dict
             IntexSpaStatus main status attributes as dict
         """
-        return {
-            "power": self.power,
-            "filter": self.filter,
-            "heater": self.heater,
-            "jets": self.jets,
-            "bubbles": self.bubbles,
-            "sanitizer": self.sanitizer,
-            "unit": self.unit,
-            "current_temp": self.current_temp,
-            "preset_temp": self.preset_temp,
-            "error_code": self.error_code,
-        }
+        try:
+            return {
+                "power": self.power,
+                "filter": self.filter,
+                "heater": self.heater,
+                "jets": self.jets,
+                "bubbles": self.bubbles,
+                "sanitizer": self.sanitizer,
+                "unit": self.unit,
+                "current_temp": self.current_temp,
+                "preset_temp": self.preset_temp,
+                "error_code": self.error_code,
+            }
+        # If _raw_status is not defined
+        except AttributeError:
+            return {
+                "power": None,
+                "filter": None,
+                "heater": None,
+                "jets": None,
+                "bubbles": None,
+                "sanitizer": None,
+                "unit": None,
+                "current_temp": None,
+                "preset_temp": None,
+                "error_code": None,
+            }
 
     def __repr__(self) -> str:
         """
