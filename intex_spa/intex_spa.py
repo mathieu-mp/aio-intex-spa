@@ -5,7 +5,8 @@ import typing
 
 from .intex_spa_network_layer import IntexSpaNetworkLayer
 from .intex_spa_query import IntexSpaQuery
-from .intex_spa_status import IntexSpaStatus
+from .intex_spa_object_status import IntexSpaStatus
+from .intex_spa_object_info import IntexSpaInfo
 from .intex_spa_exceptions import IntexSpaUnreachableException
 
 _LOGGER = logging.getLogger(__name__)
@@ -21,6 +22,8 @@ class IntexSpa:
       The network layer object for communications with intex spa wifi module
     status : IntexSpaStatus
       The status object of the spa
+    info : IntexSpaInfo
+      The info object of the spa
     """
 
     def __init__(self, address: str = "SPA_DEVICE", port: str = "8990"):
@@ -36,8 +39,9 @@ class IntexSpa:
         """
         _LOGGER.warning("Initializing IntexSpa instance")
         self.network = IntexSpaNetworkLayer(address, port)
-        self.status = IntexSpaStatus()
         self._semaphore = asyncio.Semaphore(1)
+        self.status = IntexSpaStatus()
+        self.info = IntexSpaInfo()
 
     async def _async_handle_intent(
         self, intent: str = "status", expected_state: typing.Union[bool, int] = None
@@ -70,7 +74,7 @@ class IntexSpa:
         _LOGGER.debug("'%s' intent: Handling new intent...", intent)
 
         # Trigger a preliminary update status intent if the provided intent is a command
-        if intent != "status":
+        if intent != "status" and intent != "info":
             _LOGGER.debug(
                 "'%s' intent: triggering a preliminary 'update' intent...", intent
             )
@@ -81,6 +85,8 @@ class IntexSpa:
             if (
                 # the provided intent is an update status
                 intent == "status"
+                # the provided intent is an update info
+                or intent == "info"
                 # the provided intent is a command
                 # and its expected_state differs from the current state
                 or getattr(self.status, intent) != expected_state
@@ -101,10 +107,17 @@ class IntexSpa:
                         received_bytes = await self.network.async_receive()
                         # Give the raw received_bytes back to the query object
                         # to render the new status
-                        query.render_response_status(received_bytes)
-                        _LOGGER.debug("'%s' intent: new status is rendered", intent)
-                        # And update the status object with it
-                        self.status = query.response_status
+                        query.render_response_data(received_bytes)
+                        if intent == "info":
+                            # Update the info object with the data received
+                            self.info = IntexSpaInfo(query.response_data)
+                            _LOGGER.debug("'%s' intent: new info is rendered", intent)
+                            return self.info
+                        else:
+                            # Update the status object with the data received
+                            self.status = IntexSpaStatus(query.response_data)
+                            _LOGGER.debug("'%s' intent: new status is rendered", intent)
+                            return self.status
 
                     except (AssertionError,):
                         _LOGGER.info("Malformed spa response during spa querying")
@@ -131,7 +144,7 @@ class IntexSpa:
                     self.status = IntexSpaStatus()
                     raise IntexSpaUnreachableException("Spa is unreachable")
 
-        return self.status
+        # return self.status
 
     async def async_update_status(self) -> IntexSpaStatus:
         """Update known status of the spa
@@ -232,3 +245,14 @@ class IntexSpa:
           The updated spa status
         """
         return await self._async_handle_intent("preset_temp", expected_state)
+
+    async def async_update_info(self) -> IntexSpaInfo:
+        """
+        Update known info of the spa
+
+        Returns
+        -------
+        info : IntexSpaInfo
+          The updated spa info
+        """
+        return await self._async_handle_intent("info")

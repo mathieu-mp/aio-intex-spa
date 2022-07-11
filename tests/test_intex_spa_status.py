@@ -1,4 +1,4 @@
-from intex_spa.intex_spa_status import IntexSpaStatus
+from intex_spa.intex_spa_object_status import IntexSpaStatus
 
 
 def test_intex_spa_status():
