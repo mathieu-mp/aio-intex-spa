@@ -44,7 +44,7 @@ class IntexSpaNetworkLayer:
     async def _async_connect(self) -> None:
         """Initialize a connection to the spa"""
         _LOGGER.debug(
-            "Opening TCP connection with the spa at %s:%s with asyncio",
+            "Opening TCP connection with the spa at %s:%s with asyncio...",
             self.address,
             self.port,
         )
@@ -68,14 +68,20 @@ class IntexSpaNetworkLayer:
     async def _async_disconnect(self) -> None:
         """Close the connection to the spa"""
         # If there is a writer to send a disconnect message
-        if self.writer is not None:
-            _LOGGER.debug("Closing TCP connection to the spa with asyncio")
+        try:
+            _LOGGER.debug("Closing previous TCP connection to the spa with asyncio...")
             self.writer.close()
             await self.writer.wait_closed()
-            _LOGGER.info("TCP connection closed with the spa")
-
-        self.reader = None
-        self.writer = None
+            _LOGGER.info("Previous TCP connection closed with the spa")
+        except AttributeError:
+            _LOGGER.debug("No previous spa connection known")
+        except Exception:  # pylint: disable=broad-except
+            _LOGGER.debug(
+                "Failure while closing previous TCP connection to the spa, dumping it"
+            )
+        finally:
+            self.reader = None
+            self.writer = None
 
     async def async_force_reconnect(self) -> None:
         """Force reconnecting to the spa"""
@@ -84,7 +90,7 @@ class IntexSpaNetworkLayer:
     async def async_send(self, bytes_to_write: bytes = None) -> None:
         """Send command to the spa"""
         if self.writer is None or self.reader is None:
-            _LOGGER.info("Not connected to the spa")
+            _LOGGER.info("Not connected to the spa, trying to connect...")
             await self._async_connect()
         elif self.writer.is_closing() or self.reader.at_eof():
             _LOGGER.info("Connection with the spa seems to be broken")
