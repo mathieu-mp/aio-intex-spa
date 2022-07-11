@@ -72,7 +72,7 @@ class IntexSpa:
         # Trigger a preliminary update status intent if the provided intent is a command
         if intent != "status":
             _LOGGER.debug(
-                "'%s' intent: triggering a preliminary 'update' intent", intent
+                "'%s' intent: triggering a preliminary 'update' intent...", intent
             )
             await self.async_update_status()
 
@@ -90,7 +90,7 @@ class IntexSpa:
                 # Attempt maximum 3 times
                 for _ in range(3):
                     try:
-                        _LOGGER.debug("'%s' intent: new spa query", intent)
+                        _LOGGER.debug("'%s' intent: new spa query...", intent)
                         # Initialize a query to the spa
                         query = IntexSpaQuery(intent, expected_state)
 
