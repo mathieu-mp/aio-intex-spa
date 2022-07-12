@@ -39,9 +39,9 @@ class IntexSpaInfo:
         raw_info : dict
             The response data received from the spa
         """
-        self.ip = raw_info["ip"]  # pylint: disable=invalid-name
-        self.uid = raw_info["uid"]
-        self.dtype = raw_info["dtype"]
+        self.ip: str = raw_info["ip"]  # pylint: disable=invalid-name
+        self.uid: str = raw_info["uid"]
+        self.dtype: str = raw_info["dtype"]
         _LOGGER.debug("Spa info: '%s'", self)
 
     def as_dict(self) -> dict:
