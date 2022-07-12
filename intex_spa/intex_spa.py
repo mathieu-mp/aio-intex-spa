@@ -37,7 +37,7 @@ class IntexSpa:
         port : str, default = "8990"
           The TCP service port the intex spa wifi module
         """
-        _LOGGER.warning("Initializing IntexSpa instance")
+        _LOGGER.info("Initializing IntexSpa instance")
         self.network = IntexSpaNetworkLayer(address, port)
         self._semaphore = asyncio.Semaphore(1)
         self.status = IntexSpaStatus()
