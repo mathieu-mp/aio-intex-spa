@@ -28,7 +28,7 @@ class IntexSpa:
 
     def __init__(self, address: str = "SPA_DEVICE", port: str = "8990"):
         """
-        Initialize IntexSpa class
+        Initialize IntexSpa instance
 
         Parameters
         ----------
@@ -37,11 +37,12 @@ class IntexSpa:
         port : str, default = "8990"
           The TCP service port the intex spa wifi module
         """
-        _LOGGER.info("Initializing IntexSpa instance")
+        _LOGGER.info("Initializing IntexSpa instance...")
         self.network = IntexSpaNetworkLayer(address, port)
         self._semaphore = asyncio.Semaphore(1)
         self.status = IntexSpaStatus()
         self.info = IntexSpaInfo()
+        _LOGGER.info("IntexSpa instance initialized")
 
     async def _async_handle_intent(
         self, intent: str = "status", expected_state: typing.Union[bool, int] = None
