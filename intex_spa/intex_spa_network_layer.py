@@ -83,7 +83,7 @@ class IntexSpaNetworkLayer:
             self.reader = None
             self.writer = None
 
-    async def async_force_reconnect(self) -> None:
+    async def async_force_disconnect(self) -> None:
         """Force reconnecting to the spa"""
         await self._async_disconnect()
 

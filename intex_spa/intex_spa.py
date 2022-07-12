@@ -133,7 +133,7 @@ class IntexSpa:
                         OSError,
                     ):
                         _LOGGER.info("Network raised an exception during spa querying")
-                        await self.network.async_force_reconnect()
+                        await self.network.async_force_disconnect()
                         await asyncio.sleep(2)
                         continue
 
