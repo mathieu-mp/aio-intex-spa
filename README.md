@@ -51,84 +51,11 @@ async def use_intex_spa():
 asyncio.run(use_intex_spa())
 ```
 
-## Changelog
+## Versioning
 
-This python package follows Semantic Versioning 2.0.0
+The versioning of this integration follows Semantic Versioning 2.0.0
 
 ***Reminder**: Major version zero (0.y.z) is for initial development. Anything MAY change at any time. The public API SHOULD NOT be considered stable.*
-
-### 0.8.2 - 2022-07-12
-
-Rename async_force_disconnect\
-Minor log improvement
-
-### 0.8.1 - 2022-07-12
-
-Add typing hints\
-Lower excessive log level
-
-### 0.8.0 - 2022-07-11
-
-Add 'Request Info from spa' feature (#1)
-
-### 0.7.2 - 2022-07-11
-
-Avoid recursive attempts of closing connections
-
-### 0.7.1 - 2022-07-03
-
-Correctly re-raise unexpected exception
-
-### 0.7.0 - 2022-07-03
-
-Raise exception when spa is unreachable
-
-**Breaking change**: Refactor return values
-
-### 0.6.0 - 2022-07-03
-
-Handle network exceptions
-
-**Breaking change**: Refactor return values
-
-### 0.5.1 - 2022-06-21
-
-Remove unexpected print
-
-### 0.5.0 - 2022-06-21
-
-Parse eventual `error_code` from status
-
-**Breaking change**: `current_temp` can now return `False` if an error code is read
-
-### 0.4.1 - 2022-06-20
-
-Handle concurrent requests sequentially
-
-### 0.4.0 - 2022-06-18
-
-Add "direct" async_set method to IntexSpa class \
-Remove platforms parameter to IntexSpa class
-
-### 0.3.0 - 2022-06-18
-
-Add platforms parameter to IntexSpa class
-
-### 0.2.1 - 2022-06-11
-
-Make compatible with Python 3.9
-
-### 0.2.0 - 2022-06-11
-
-Allow client to import package classes
-
-### 0.1.2 - 2022-06-04
-
-✨ First release to PyPI
-
-### 0.1.0 - 2022-06-04
-
-✨ First release
 
 <!-- links start -->
 
