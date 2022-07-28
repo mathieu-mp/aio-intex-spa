@@ -53,14 +53,17 @@ asyncio.run(use_intex_spa())
 
 ## Versioning
 
-The versioning of this integration follows Semantic Versioning 2.0.0
+The versioning of this python package follows Semantic Versioning 2.0.0
 
 ***Reminder**: Major version zero (0.y.z) is for initial development. Anything MAY change at any time. The public API SHOULD NOT be considered stable.*
+
+For Changelog, please read [releases].
 
 <!-- links start -->
 
 [maintained]: https://img.shields.io/maintenance/yes/2022.svg
 [pypilink]: https://pypi.org/project/intex-spa/
 [pypibadge]: https://badge.fury.io/py/intex-spa.svg
+[releases]: https://github.com/mathieu-mp/intex-spa/releases
 
 <!-- links end -->
