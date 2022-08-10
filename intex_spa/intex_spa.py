@@ -145,7 +145,9 @@ class IntexSpa:
                     self.status = IntexSpaStatus()
                     raise IntexSpaUnreachableException("Spa is unreachable")
 
-        # return self.status
+        # Return a status even when getattr(self.status, intent) == expected_state
+        # Fixes mathieu-mp/intex-spa#17
+        return self.status
 
     async def async_update_status(self) -> IntexSpaStatus:
         """Update known status of the spa
