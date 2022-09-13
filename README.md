@@ -3,7 +3,8 @@
 <!-- badges start -->
 
 [![PyPI version][pypibadge]][pypilink]
-[![Maintained][Maintained]](#)
+![Project Maintenance][maintenance-shield]
+[![Open in Remote - Containers][devcontainer-badge]][devcontainer]
 
 <!-- badges end -->
 
@@ -61,9 +62,11 @@ For Changelog, please read [releases].
 
 <!-- links start -->
 
-[maintained]: https://img.shields.io/maintenance/yes/2022.svg
 [pypilink]: https://pypi.org/project/intex-spa/
 [pypibadge]: https://badge.fury.io/py/intex-spa.svg
 [releases]: https://github.com/mathieu-mp/intex-spa/releases
+[maintenance-shield]: https://img.shields.io/maintenance/yes/2022.svg
+[devcontainer]: https://vscode.dev/redirect?url=vscode://ms-vscode-remote.remote-containers/cloneInVolume?url=https://github.com/mathieu-mp/intex-spa
+[devcontainer-badge]: https://img.shields.io/static/v1?label=Remote%20-%20Containers&message=Open&color=blue&logo=visualstudiocode
 
 <!-- links end -->
