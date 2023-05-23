@@ -67,6 +67,9 @@ labels:
   - name: "Documentation"
     color: "0077ff"
 
+  - name: "User Assistance"
+    color: "0077ff"
+
   - name: "Stale"
     color: "ffffff"
 
