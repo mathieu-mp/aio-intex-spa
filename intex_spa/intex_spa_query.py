@@ -55,13 +55,16 @@ def checksum_as_int(data: str) -> int:
         calculated_checksum = calculated_checksum - (
             int("0x" + data[index : index + 2], 16)
         )
-    return calculated_checksum % 0xFF
+    calculated_checksum = calculated_checksum % 0xFF
+    if calculated_checksum == 0x00:
+        calculated_checksum = 0xFF
+    return calculated_checksum
 
 
 def checksum_as_str(data: str) -> str:
     """Return string checksum for the given data, as expected by Intex Spa protocol"""
     # Return checksum as a hex string without 0x prefix
-    return hex(checksum_as_int(data) % 0xFF)[2:].upper()
+    return hex(checksum_as_int(data))[2:].upper()
 
 
 class IntexSpaQuery:
