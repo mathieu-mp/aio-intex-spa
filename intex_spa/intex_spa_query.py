@@ -56,6 +56,7 @@ def checksum_as_int(data: str) -> int:
             int("0x" + data[index : index + 2], 16)
         )
     calculated_checksum = calculated_checksum % 0xFF
+    # Fix: https://github.com/mathieu-mp/intex-spa/issues/27
     if calculated_checksum == 0x00:
         calculated_checksum = 0xFF
     return calculated_checksum
