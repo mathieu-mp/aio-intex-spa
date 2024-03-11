@@ -1,11 +1,11 @@
-from intex_spa.intex_spa_query import IntexSpaQuery
+from aio_intex_spa.intex_spa_query import IntexSpaQuery
 
 import pytest
 
 valid_status_responses = [
     b'{"sid":"12345678901234","data":"FFFF110F010700220000000080808022000012","result":"ok","type":2}\n',
-    b'{"sid":"12345678901234","data":"FFFF110F01070064000000008080806700008A","result":"ok","type":2}\n',  # From https://github.com/mathieu-mp/intex-spa/issues/27
-    b'{"sid":"12345678901234","data":"FFFF110F0107006400000085808085670000FF","result":"ok","type":2}\n',  # From https://github.com/mathieu-mp/intex-spa/issues/27
+    b'{"sid":"12345678901234","data":"FFFF110F01070064000000008080806700008A","result":"ok","type":2}\n',  # From https://github.com/mathieu-mp/aio-intex-spa/issues/27
+    b'{"sid":"12345678901234","data":"FFFF110F0107006400000085808085670000FF","result":"ok","type":2}\n',  # From https://github.com/mathieu-mp/aio-intex-spa/issues/27
 ]
 invalid_status_responses = [
     b'{"sid":"12345678901234","data":"FFFF110F010700220000000080808022000044","result":"ok","type":2}\n',  # Arbitrary false checksum

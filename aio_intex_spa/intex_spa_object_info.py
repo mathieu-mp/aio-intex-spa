@@ -6,7 +6,7 @@ _LOGGER = logging.getLogger(__name__)
 
 class IntexSpaInfo:
     """
-    Class to represent Intex Spa status
+    Class to represent Intex Spa info
 
     Attributes
     -------
@@ -20,7 +20,7 @@ class IntexSpaInfo:
 
     def __init__(self, raw_info: str = None):
         """
-        Initialize IntexSpaStatus class
+        Initialize IntexSpaInfo class
 
         Parameters
         ----------
@@ -69,6 +69,6 @@ class IntexSpaInfo:
 
     def __repr__(self) -> str:
         """
-        Represent IntexSpaInfo main status attributes
+        Represent IntexSpaInfo main attributes
         """
         return repr(self.as_dict())

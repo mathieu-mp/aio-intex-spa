@@ -3,10 +3,10 @@
 
 repository:
   # A short description of the repository that will show up on GitHub
-  description: "Python package for Intex Spa wifi client"
+  description: "Python client for Intex Spa wifi interface"
 
   # A URL with more information about the repository
-  homepage: https://pypi.org/project/intex-spa/
+  homepage: https://pypi.org/project/aio-intex-spa/
 
   # A comma-separated list of topics to set on the repository
   topics: intex, spa, purespa, intexspa, wifi, asyncio

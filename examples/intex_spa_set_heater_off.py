@@ -1,20 +1,20 @@
-"""Usage example file"""
+"""Usage example: Set spa heater off"""
 import os
 import logging
 import asyncio
 
-from intex_spa.intex_spa import IntexSpa
+from aio_intex_spa import IntexSpa
 
 SPA_ADDRESS = os.getenv("SPA_ADDRESS") or "SPA_DEVICE"
 
 logging.basicConfig(level=logging.DEBUG)
 
 
-async def example_intex_spa():
-    """Example for intex_spa"""
-    intex_spa = IntexSpa(SPA_ADDRESS)
+async def set_spa_heater_off():
+    """Set spa heater off"""
+    spa = IntexSpa(SPA_ADDRESS)
 
-    print(await intex_spa.async_set_heater(False))
+    print(await spa.async_set_heater(False))
 
 
-asyncio.run(example_intex_spa())
+asyncio.run(set_spa_heater_off())
