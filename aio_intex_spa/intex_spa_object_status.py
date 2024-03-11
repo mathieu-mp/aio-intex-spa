@@ -158,6 +158,6 @@ class IntexSpaStatus:
 
     def __repr__(self) -> str:
         """
-        Represent IntexSpaStatus main status attributes
+        Represent IntexSpaStatus main attributes
         """
         return repr(self.as_dict())

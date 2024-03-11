@@ -1,20 +1,20 @@
-"""Usage example file"""
+"""Usage example: Get spa info"""
 import os
 import logging
 import asyncio
 
-from intex_spa.intex_spa import IntexSpa
+from aio_intex_spa import IntexSpa
 
 SPA_ADDRESS = os.getenv("SPA_ADDRESS") or "SPA_DEVICE"
 
 logging.basicConfig(level=logging.DEBUG)
 
 
-async def example_intex_spa():
-    """Example for intex_spa"""
-    intex_spa = IntexSpa(SPA_ADDRESS)
+async def get_spa_info():
+    """Get spa info"""
+    spa = IntexSpa(SPA_ADDRESS)
 
-    print(await intex_spa.async_update_info())
+    print(await spa.async_update_info())
 
 
-asyncio.run(example_intex_spa())
+asyncio.run(get_spa_info())

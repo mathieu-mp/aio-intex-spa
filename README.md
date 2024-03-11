@@ -1,4 +1,4 @@
-# intex-spa
+# aio-intex-spa
 
 <!-- badges start -->
 
@@ -8,7 +8,7 @@
 
 <!-- badges end -->
 
-_An AsyncIO-compatible Intex Spa wifi client_
+_An AsyncIO-compatible Python client for Intex Spa wifi interface_
 
 ## Description
 
@@ -23,7 +23,7 @@ It is written with asyncio network functions. It only supports asyncio usage.
 ## User installation
 
 ```bash
-python3 -m pip install -U intex-spa
+python3 -m pip install -U aio-intex-spa
 ```
 
 ## Usage examples
@@ -32,24 +32,24 @@ Below are some examples, see `examples` directory for more delight.
 
 ### Retrieve spa status
 ```python
-from intex_spa import IntexSpa
+from aio_intex_spa import IntexSpa
 
-async def use_intex_spa():
-    intex_spa = IntexSpa(SPA_ADDRESS)
-    await intex_spa.async_update_status()
+async def get_spa_status():
+    spa = IntexSpa(SPA_ADDRESS)
+    await spa.async_update_status()
 
-asyncio.run(use_intex_spa())
+asyncio.run(get_spa_status())
 ```
 
-### Set spa function state
+### Set spa heater state
 ```python
-from intex_spa import IntexSpa
+from aio_intex_spa import IntexSpa
 
-async def use_intex_spa():
-    intex_spa = IntexSpa(SPA_ADDRESS)
-    await intex_spa.async_set_heater(True)
+async def set_spa_heater_state():
+    spa = IntexSpa(SPA_ADDRESS)
+    await spa.async_set_heater(True)
 
-asyncio.run(use_intex_spa())
+asyncio.run(set_spa_heater_state())
 ```
 
 ## Versioning
@@ -62,11 +62,11 @@ For Changelog, please read [releases].
 
 <!-- links start -->
 
-[pypilink]: https://pypi.org/project/intex-spa/
-[pypibadge]: https://badge.fury.io/py/intex-spa.svg
-[releases]: https://github.com/mathieu-mp/intex-spa/releases
+[pypilink]: https://pypi.org/project/aio-intex-spa/
+[pypibadge]: https://badge.fury.io/py/aio-intex-spa.svg
+[releases]: https://github.com/mathieu-mp/aio-intex-spa/releases
 [maintenance-shield]: https://img.shields.io/maintenance/yes/2023.svg
-[devcontainer]: https://vscode.dev/redirect?url=vscode://ms-vscode-remote.remote-containers/cloneInVolume?url=https://github.com/mathieu-mp/intex-spa
+[devcontainer]: https://vscode.dev/redirect?url=vscode://ms-vscode-remote.remote-containers/cloneInVolume?url=https://github.com/mathieu-mp/aio-intex-spa
 [devcontainer-badge]: https://img.shields.io/static/v1?label=Remote%20-%20Containers&message=Open&color=blue&logo=visualstudiocode
 
 <!-- links end -->
