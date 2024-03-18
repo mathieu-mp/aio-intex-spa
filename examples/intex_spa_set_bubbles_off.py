@@ -1,4 +1,5 @@
-"""Usage example: Set spa bubbles off"""
+"""Usage example: Set spa bubbles off."""
+
 import os
 import logging
 import asyncio
@@ -11,7 +12,7 @@ logging.basicConfig(level=logging.DEBUG)
 
 
 async def set_spa_bubbles_off():
-    """Set spa bubbles off"""
+    """Set spa bubbles off."""
     spa = IntexSpa(SPA_ADDRESS)
 
     print(await spa.async_set_bubbles(False))

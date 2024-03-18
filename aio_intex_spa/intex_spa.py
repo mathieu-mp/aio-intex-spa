@@ -1,7 +1,7 @@
-"""IntexSpa"""
+"""Load IntexSpa class."""
+
 import logging
 import asyncio
-import typing
 
 from .intex_spa_network_layer import IntexSpaNetworkLayer
 from .intex_spa_query import IntexSpaQuery
@@ -13,22 +13,23 @@ _LOGGER = logging.getLogger(__name__)
 
 
 class IntexSpa:
-    """
+    """Interface the user with Intex Spa.
+
     AsyncIO-enabled class to interface with Intex Spa wifi module
 
     Attributes
-    -------
+    ----------
     network : IntexSpaNetworkLayer
       The network layer object for communications with intex spa wifi module
     status : IntexSpaStatus
       The status object of the spa
     info : IntexSpaInfo
       The info object of the spa
+
     """
 
     def __init__(self, address: str = "SPA_DEVICE", port: str = "8990"):
-        """
-        Initialize IntexSpa instance
+        """Initialize IntexSpa object instance.
 
         Parameters
         ----------
@@ -36,6 +37,7 @@ class IntexSpa:
           The fqdn or IP of the intex spa wifi module
         port : str, default = "8990"
           The TCP service port the intex spa wifi module
+
         """
         _LOGGER.info("Initializing IntexSpa instance...")
         self.network = IntexSpaNetworkLayer(address, port)
@@ -45,10 +47,9 @@ class IntexSpa:
         _LOGGER.info("IntexSpa instance initialized")
 
     async def _async_handle_intent(
-        self, intent: str = "status", expected_state: typing.Union[bool, int] = None
+        self, intent: str = "status", expected_state: bool | int = None
     ) -> IntexSpaStatus:
-        """
-        Handle any intent by conversing with the spa wifi module
+        """Handle any intent by conversing with the spa wifi module.
 
         An intent can be:
         * update: to refresh the status object of the spa
@@ -70,6 +71,7 @@ class IntexSpa:
         -------
         status : IntexSpaStatus
           The status of the spa
+
         """
 
         _LOGGER.debug("'%s' intent: Handling new intent...", intent)
@@ -126,8 +128,8 @@ class IntexSpa:
                         continue
 
                     except (
+                        TimeoutError,
                         asyncio.IncompleteReadError,
-                        asyncio.TimeoutError,
                         ConnectionRefusedError,
                         ConnectionResetError,
                         ConnectionError,
@@ -150,112 +152,113 @@ class IntexSpa:
         return self.status
 
     async def async_update_status(self) -> IntexSpaStatus:
-        """Update known status of the spa
+        """Update known status of the spa.
 
         Returns
         -------
         status : IntexSpaStatus
           The updated spa status
+
         """
         return await self._async_handle_intent("status")
 
     async def async_set(
         self, parameter: str, expected_state: bool = True
     ) -> IntexSpaStatus:
-        """
-        Set specified parameter to `expected_state`
+        """Set specified parameter to `expected_state`.
 
         Returns
         -------
         status : IntexSpaStatus
           The updated spa status
+
         """
         return await self._async_handle_intent(parameter, expected_state)
 
     async def async_set_power(self, expected_state: bool = True) -> IntexSpaStatus:
-        """
-        Set power function to `expected_state`
+        """Set power function to `expected_state`.
 
         Returns
         -------
         status : IntexSpaStatus
           The updated spa status
+
         """
         return await self.async_set("power", expected_state)
 
     async def async_set_filter(self, expected_state: bool = True) -> IntexSpaStatus:
-        """
-        Set filter function to `expected_state`
+        """Set filter function to `expected_state`.
 
         Returns
         -------
         status : IntexSpaStatus
           The updated spa status
+
         """
         return await self.async_set("filter", expected_state)
 
     async def async_set_heater(self, expected_state: bool = True) -> IntexSpaStatus:
-        """
-        Set heater function to `expected_state`
+        """Set heater function to `expected_state`.
 
         Returns
         -------
         status : IntexSpaStatus
           The updated spa status
+
         """
         return await self.async_set("heater", expected_state)
 
     async def async_set_jets(self, expected_state: bool = True) -> IntexSpaStatus:
-        """
-        Set jets function to `expected_state`
+        """Set jets function to `expected_state`.
 
         Returns
         -------
         status : IntexSpaStatus
           The updated spa status
+
         """
         return await self.async_set("jets", expected_state)
 
     async def async_set_bubbles(self, expected_state: bool = True) -> IntexSpaStatus:
-        """
-        Set bubbles function to `expected_state`
+        """Set bubbles function to `expected_state`.
 
         Returns
         -------
         status : IntexSpaStatus
           The updated spa status
+
         """
         return await self.async_set("bubbles", expected_state)
 
     async def async_set_sanitizer(self, expected_state: bool = True) -> IntexSpaStatus:
-        """
-        Set sanitizer function to `expected_state`
+        """Set sanitizer function to `expected_state`.
 
         Returns
         -------
         status : IntexSpaStatus
           The updated spa status
+
         """
         return await self.async_set("sanitizer", expected_state)
 
     async def async_set_preset_temp(self, expected_state: int) -> IntexSpaStatus:
-        """
-        Set preset_temp function to `expected_state`
+        """Set preset_temp function to `expected_state`.
 
         Returns
         -------
         status : IntexSpaStatus
           The updated spa status
+
         """
         return await self._async_handle_intent("preset_temp", expected_state)
 
     async def async_update_info(self) -> IntexSpaInfo:
-        """
-        Update known info of the spa
+        """Update known info from the spa.
 
         Returns
         -------
         info : IntexSpaInfo
           The updated spa info
+
         """
         return await self._async_handle_intent("info")

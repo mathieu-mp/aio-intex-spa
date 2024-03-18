@@ -1,4 +1,5 @@
-"""Usage example: Set spa filter on"""
+"""Usage example: Set spa filter on."""
+
 import os
 import logging
 import asyncio
@@ -11,7 +12,7 @@ logging.basicConfig(level=logging.DEBUG)
 
 
 async def set_spa_filter_on():
-    """Set spa filter on"""
+    """Set spa filter on."""
     spa = IntexSpa(SPA_ADDRESS)
 
     print(await spa.async_set_filter())

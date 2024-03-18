@@ -1,4 +1,5 @@
-"""Usage example: Get spa info"""
+"""Usage example: Get spa info."""
+
 import os
 import logging
 import asyncio
@@ -11,7 +12,7 @@ logging.basicConfig(level=logging.DEBUG)
 
 
 async def get_spa_info():
-    """Get spa info"""
+    """Get spa info."""
     spa = IntexSpa(SPA_ADDRESS)
 
     print(await spa.async_update_info())

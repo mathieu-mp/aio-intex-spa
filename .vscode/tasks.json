@@ -1,0 +1,11 @@
+{
+    "version": "2.0.0",
+    "tasks": [
+        {
+            "label": "Lint code",
+            "type": "shell",
+            "command": "scripts/lint",
+            "problemMatcher": []
+        }
+    ]
+}

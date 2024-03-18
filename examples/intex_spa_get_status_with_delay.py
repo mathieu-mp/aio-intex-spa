@@ -1,4 +1,5 @@
-"""Usage example: Get spa status with delay"""
+"""Usage example: Get spa status with delay."""
+
 import os
 import logging
 import asyncio
@@ -11,7 +12,7 @@ logging.basicConfig(level=logging.DEBUG)
 
 
 async def get_spa_status_with_delay():
-    """Get spa status with delay"""
+    """Get spa status with delay."""
     spa = IntexSpa(SPA_ADDRESS)
 
     print(await spa.async_update_status())

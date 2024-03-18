@@ -1,4 +1,5 @@
-"""Usage example: Set spa preset temp to 34°C"""
+"""Usage example: Set spa preset temp to 34°C."""
+
 import os
 import logging
 import asyncio
@@ -11,7 +12,7 @@ logging.basicConfig(level=logging.DEBUG)
 
 
 async def set_spa_preset_temp_34():
-    """Set spa preset temp to 34°C"""
+    """Set spa preset temp to 34°C."""
     spa = IntexSpa(SPA_ADDRESS)
 
     print(await spa.async_set_preset_temp(34))

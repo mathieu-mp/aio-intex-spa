@@ -1,28 +1,41 @@
+// See https://aka.ms/vscode-remote/devcontainer.json for format details.
 {
-	"image": "mcr.microsoft.com/vscode/devcontainers/python:0-3.9",
-	"context": "..",
-	"postCreateCommand": "python3 setup.py develop",
-	"runArgs": [
-		"-v",
-		"${env:HOME}${env:USERPROFILE}/.ssh:/tmp/.ssh"
-	],
-	"extensions": [
-		"ms-python.python",
-		"ms-python.pylint",
-		"github.vscode-pull-request-github",
-		"tabnine.tabnine-vscode"
-	],
-	"settings": {
-		"files.eol": "\n",
-		"editor.tabSize": 4,
-		"terminal.integrated.shell.linux": "/bin/bash",
-		"python.pythonPath": "/usr/bin/python3",
-		"python.linting.pylintEnabled": true,
-		"python.linting.enabled": true,
-		"python.formatting.provider": "black",
-		"editor.formatOnPaste": false,
-		"editor.formatOnSave": true,
-		"editor.formatOnType": true,
-		"files.trimTrailingWhitespace": true
-	}
+    "name": "Intex Spa Python client",
+    "image": "mcr.microsoft.com/vscode/devcontainers/python:3.12-bookworm",
+    "postCreateCommand": "scripts/setup",
+    "customizations": {
+        "vscode": {
+            "extensions": [
+                "charliermarsh.ruff",
+                "tamasfe.even-better-toml",
+                "ryanluker.vscode-coverage-gutters",
+                "github.vscode-pull-request-github",
+                "GitHub.vscode-github-actions"
+            ],
+            "settings": {
+                "files.eol": "\n",
+                "editor": {
+                    "tabSize": 4,
+                    "formatOnPaste": false,
+                    "formatOnSave": true,
+                    "formatOnType": true
+                },
+                "files.trimTrailingWhitespace": true,
+                "python": {
+                    "pythonPath": "/usr/bin/python3",
+                    "analysis.autoSearchPaths": false,
+                    "editor": {
+                        "defaultFormatter": "charliermarsh.ruff",
+                        "formatOnSave": true,
+                        "codeActionsOnSave": {
+                            "source.fixAll": "explicit",
+                            "source.organizeImports": "explicit"
+                        }
+                    }
+                },
+                "codeAction.disableRuleComment": false
+            }
+        }
+    },
+    "remoteUser": "vscode"
 }

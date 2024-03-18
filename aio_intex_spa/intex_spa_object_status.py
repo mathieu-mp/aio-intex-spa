@@ -1,16 +1,15 @@
-"""IntexSpaStatus"""
+"""Load IntexSpaStatus."""
+
 import logging
-import typing
 
 _LOGGER = logging.getLogger(__name__)
 
 
 class IntexSpaStatus:
-    """
-    Class to represent Intex Spa status
+    """Hold and expose the status response objects.
 
     Attributes
-    -------
+    ----------
     _raw_status : int
         The raw integer-encoded status data, as received from the spa
     power : bool
@@ -22,43 +21,45 @@ class IntexSpaStatus:
     unit : str
     current_temp : int
     preset_temp : int
+
     """
 
     @property
     def power(self) -> bool:
-        """Power state of the spa"""
+        """Power state of the spa."""
         return bool((self._raw_status >> 104) & 0b1)
 
     @property
     def filter(self) -> bool:
-        """State of the filter function"""
+        """State of the filter function."""
         return bool((self._raw_status >> 105) & 0b1)
 
     @property
     def heater(self) -> bool:
-        """State of the heater function"""
+        """State of the heater function."""
         return bool((self._raw_status >> 106) & 0b1)
 
     @property
     def jets(self) -> bool:
-        """State of the jets function"""
+        """State of the jets function."""
         return bool((self._raw_status >> 107) & 0b1)
 
     @property
     def bubbles(self) -> bool:
-        """State of the bubbles function"""
+        """State of the bubbles function."""
         return bool((self._raw_status >> 108) & 0b1)
 
     @property
     def sanitizer(self) -> bool:
-        """State of sanitizer function"""
+        """State of sanitizer function."""
         return bool((self._raw_status >> 109) & 0b1)
 
     @property
     def unit(self) -> str:
-        """Temperature measurement unit
-        *"°C" for Celsius*
-        *"°F" for Farenheit*
+        """Unit of the temperature values.
+
+        * "°C" for Celsius*
+        * "°F" for Farenheit*
         """
         if self.preset_temp <= 40:
             return "°C"
@@ -66,8 +67,8 @@ class IntexSpaStatus:
             return "°F"
 
     @property
-    def current_temp(self) -> typing.Union[int, bool]:
-        """Current temperature of the water, expressed in `unit`"""
+    def current_temp(self) -> int | bool:
+        """Current temperature of the water, expressed in `unit`."""
         raw_current_temp = (self._raw_status >> 88) & 0xFF
 
         # If current_temp encodes a temperature, return the temperature
@@ -78,8 +79,8 @@ class IntexSpaStatus:
             return False
 
     @property
-    def error_code(self) -> typing.Union[int, bool]:
-        """Current error code of the spa"""
+    def error_code(self) -> int | bool:
+        """Current error code of the spa."""
         raw_current_temp = (self._raw_status >> 88) & 0xFF
 
         # If current_temp encodes an error (E81, ...), return the error code
@@ -92,41 +93,41 @@ class IntexSpaStatus:
 
     @property
     def preset_temp(self) -> int:
-        """Preset temperature of the water, expressed in `unit`"""
+        """Preset temperature of the water, expressed in `unit`."""
         return (self._raw_status >> 24) & 0xFF
 
     def __init__(self, raw_status: int = None):
-        """
-        Initialize IntexSpaStatus class
+        """Initialize IntexSpaStatus class.
 
         Parameters
         ----------
         raw_status : int, optional
             The raw response data received from the spa
+
         """
         if raw_status is not None:
             self.update(raw_status)
 
     def update(self, raw_status: int):
-        """
-        Update the raw_status
+        """Update the status of the spa from the received raw response.
 
         Parameters
         ----------
         raw_status : int
             The raw response data received from the spa
+
         """
         self._raw_status = raw_status
         _LOGGER.debug("Spa status: '%s'", self)
 
     def as_dict(self) -> dict:
-        """
-        Return main status attributes only, as dict
+        """Return main status attributes only, as dict.
 
         Returns
         -------
         status_attributes : dict
             IntexSpaStatus main status attributes as dict
+
         """
         try:
             return {
@@ -157,7 +158,5 @@ class IntexSpaStatus:
             }
 
     def __repr__(self) -> str:
-        """
-        Represent IntexSpaStatus main attributes
-        """
+        """Represent IntexSpaStatus main attributes."""
         return repr(self.as_dict())

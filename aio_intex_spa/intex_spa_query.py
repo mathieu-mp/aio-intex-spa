@@ -1,4 +1,5 @@
-"""IntexSpaQuery"""
+"""Load IntexSpaQuery class."""
+
 import time
 import json
 
@@ -49,7 +50,7 @@ COMMAND: dict = {
 
 
 def checksum_as_int(data: str) -> int:
-    """Return integer checksum for the given data, as expected by Intex Spa protocol"""
+    """Return integer checksum for the given data, as expected by Intex Spa protocol."""
     calculated_checksum = 0xFF
     for index in range(0, len(data), 2):
         calculated_checksum = calculated_checksum - (
@@ -63,19 +64,18 @@ def checksum_as_int(data: str) -> int:
 
 
 def checksum_as_str(data: str) -> str:
-    """Return string checksum for the given data, as expected by Intex Spa protocol"""
+    """Return string checksum for the given data, as expected by Intex Spa protocol."""
     # Return checksum as a hex string without 0x prefix
     return hex(checksum_as_int(data))[2:].upper()
 
 
 class IntexSpaQuery:
-    """
-    Class to manage one application-layer query with Intex Spa wifi module
+    """Manage one application-layer query with Intex Spa wifi module.
 
-    Manages encoding and decoding of one request and its response messages
+    For a specific query, manage encoding and decoding of the request and its response messages
 
     Attributes
-    -------
+    ----------
     intex_timestamp : str
         The 10th of milliseconds timestamp, as expected by Intex Spa protocol
     request : str
@@ -84,6 +84,7 @@ class IntexSpaQuery:
         The full message request to send, as expected by Intex Spa protocol, encoded as bytes
     response_data
         The rendered response data
+
     """
 
     def __init__(self, intent: str, preset_temp: int = None):
@@ -100,7 +101,7 @@ class IntexSpaQuery:
 
     @property
     def request_bytes(self) -> bytes:
-        """The full message request to send, as expected by Intex Spa protocol, encoded as bytes"""
+        """The full message request to send, as expected by Intex Spa protocol, encoded as bytes."""
         request_dict = {
             "data": self.request + checksum_as_str(self.request),
             "sid": self.intex_timestamp,
@@ -109,8 +110,7 @@ class IntexSpaQuery:
         return json.dumps(request_dict).encode()
 
     def render_response_data(self, received_bytes: bytes):
-        """
-        Render response data from `received_bytes` from Intex Spa wifi module
+        """Render response data from `received_bytes` from Intex Spa wifi module.
 
         Parameters
         ----------
@@ -118,9 +118,10 @@ class IntexSpaQuery:
             The response received from Intex Spa wifi module, as bytes
 
         Returns
-        ----------
+        -------
         response_data : int
             The new data, rendered from the spa response
+
         """
         response = json.loads(received_bytes.decode())
 
