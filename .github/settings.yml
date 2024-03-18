@@ -2,6 +2,11 @@
 # See https://docs.github.com/en/rest/repos/repos#update-a-repository for all available settings.
 
 repository:
+  # See https://docs.github.com/en/rest/reference/repos#update-a-repository for all available settings.
+
+  # The name of the repository. Changing this will rename the repository
+  name: aio-intex-spa
+
   # A short description of the repository that will show up on GitHub
   description: "Python client for Intex Spa wifi interface"
 
@@ -25,7 +30,7 @@ repository:
   has_wiki: false
 
   # Either `true` to enable downloads for this repository, `false` to disable them.
-  has_downloads: true
+  has_downloads: false
 
   # Updates the default branch for this repository.
   default_branch: main
@@ -33,6 +38,7 @@ repository:
   # Either `true` to allow squash-merging pull requests, or `false` to prevent
   # squash-merging.
   allow_squash_merge: true
+  squash_merge_commit_title: PR_TITLE
 
   # Either `true` to allow merging pull requests with a merge commit, or `false`
   # to prevent merging pull requests with merge commits.
@@ -45,12 +51,15 @@ repository:
   # Either `true` to enable automatic deletion of branches on merge, or `false` to disable
   delete_branch_on_merge: true
 
-  # Either `true` to enable automated security fixes, or `false` to disable automated security fixes
+  # Either `true` to enable automated security fixes, or `false` to disable
+  # automated security fixes.
   enable_automated_security_fixes: true
 
-  # Either `true` to enable vulnerability alerts, or `false` to disable vulnerability alerts
+  # Either `true` to enable vulnerability alerts, or `false` to disable
+  # vulnerability alerts.
   enable_vulnerability_alerts: true
 
+# Labels: define labels for Issues and Pull Requests
 labels:
   - name: "Feature Request"
     color: "00ffbb"
@@ -58,26 +67,95 @@ labels:
   - name: "Bug"
     color: "e30000"
 
-  - name: "Wont Fix"
-    color: "ffffff"
+  - name: "Obsolescence"
+    color: "000000"
 
   - name: "Enhancement"
-    color: "48ff00"
+    color: "00ffbb"
 
   - name: "Documentation"
+    description: "To update Documentation"
     color: "0077ff"
 
   - name: "User Assistance"
     color: "0077ff"
 
-  - name: "Stale"
-    color: "ffffff"
+  - name: "Won't Fix"
+    color: "aaaaaa"
 
   - name: "Help needed"
+    description: "Contribution needed"
     color: "fbca04"
 
-  - name: "dependencies"
-    color: "000000"
+  - name: "Dependencies"
+    description: "To update Dependencies"
+    color: "0052cc"
 
-  - name: "github_actions"
-    color: "000000"
+# Milestones: define milestones for Issues and Pull Requests
+# milestones:
+#   - title: milestone-title
+#     description: milestone-description
+#     # The state of the milestone. Either `open` or `closed`
+#     state: open
+
+# Collaborators: give specific users access to this repository.
+# See https://docs.github.com/en/rest/reference/repos#add-a-repository-collaborator for available options
+# collaborators:
+#   # - username: bkeepers
+#   #   permission: push
+#   # - username: hubot
+#   #   permission: pull
+
+# Note: `permission` is only valid on organization-owned repositories.
+# The permission to grant the collaborator. Can be one of:
+# * `pull` - can pull, but not push to or administer this repository.
+# * `push` - can pull and push, but not administer this repository.
+# * `admin` - can pull, push and administer this repository.
+# * `maintain` - Recommended for project managers who need to manage the repository without access to sensitive or destructive actions.
+# * `triage` - Recommended for contributors who need to proactively manage issues and pull requests without write access.
+
+# See https://docs.github.com/en/rest/reference/teams#add-or-update-team-repository-permissions for available options
+# teams:
+#   - name: core
+#     # The permission to grant the team. Can be one of:
+#     # * `pull` - can pull, but not push to or administer this repository.
+#     # * `push` - can pull and push, but not administer this repository.
+#     # * `admin` - can pull, push and administer this repository.
+#     # * `maintain` - Recommended for project managers who need to manage the repository without access to sensitive or destructive actions.
+#     # * `triage` - Recommended for contributors who need to proactively manage issues and pull requests without write access.
+#     permission: admin
+#   - name: docs
+#     permission: push
+
+# branches:
+#   - name: main
+#     # https://docs.github.com/en/rest/reference/repos#update-branch-protection
+#     # Branch Protection settings. Set to null to disable
+#     protection:
+#       # Required. Require at least one approving review on a pull request, before merging. Set to null to disable.
+#       required_pull_request_reviews:
+#         # The number of approvals required. (1-6)
+#         required_approving_review_count: 1
+#         # Dismiss approved reviews automatically when a new commit is pushed.
+#         dismiss_stale_reviews: true
+#         # Blocks merge until code owners have reviewed.
+#         require_code_owner_reviews: true
+#         # Specify which users and teams can dismiss pull request reviews. Pass an empty dismissal_restrictions object to disable. User and team dismissal_restrictions are only available for organization-owned repositories. Omit this parameter for personal repositories.
+#         dismissal_restrictions:
+#           users: []
+#           teams: []
+#       # Required. Require status checks to pass before merging. Set to null to disable
+#       required_status_checks:
+#         # Required. Require branches to be up to date before merging.
+#         strict: true
+#         # Required. The list of status checks to require in order to merge into this branch
+#         contexts: []
+#       # Required. Enforce all configured restrictions for administrators. Set to true to enforce required status checks for repository administrators. Set to null to disable.
+#       enforce_admins: true
+#       # Prevent merge commits from being pushed to matching branches
+#       required_linear_history: true
+#       # Required. Restrict who can push to this branch. Team and user restrictions are only available for organization-owned repositories. Set to null to disable.
+#       restrictions:
+#         apps: []
+#         users: []
+#         teams: []
