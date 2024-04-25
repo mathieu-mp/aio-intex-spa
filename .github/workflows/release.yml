@@ -26,6 +26,9 @@ jobs:
       - tests
     runs-on: ubuntu-latest
     steps:
+      - name: "Checkout the repository"
+        uses: actions/checkout@v4
+
       - name: Set version number
         run: |
           sed -i 's/version = "0.0.0"/version = "${{ github.event.release.tag_name }}"/' \
