@@ -1,4 +1,5 @@
-"""IntexSpa"""
+"""Load IntexSpaNetworkLayer class."""
+
 import logging
 import asyncio
 import socket
@@ -9,11 +10,12 @@ _LOGGER = logging.getLogger(__name__)
 
 
 class IntexSpaNetworkLayer:
-    """
+    """Manage Network-layer communications.
+
     AsyncIO-enabled class to manage network-layer communications with Intex Spa wifi module
 
     Attributes
-    -------
+    ----------
     address : str
         The fqdn or IP of the intex spa wifi module
     port : str
@@ -22,11 +24,11 @@ class IntexSpaNetworkLayer:
         The StreamReader connected to the spa
     writer : asyncio.StreamWriter
         The StreamWriter connected to the spa
+
     """
 
     def __init__(self, address: str, port: str):
-        """
-        Initialize IntexSpaNetworkLayer class
+        """Initialize IntexSpaNetworkLayer class.
 
         Parameters
         ----------
@@ -34,6 +36,7 @@ class IntexSpaNetworkLayer:
             The fqdn or IP of the intex spa wifi module
         port : str
             The TCP service port of the intex spa wifi module
+
         """
         self.address = address
         self.port = port
@@ -42,7 +45,7 @@ class IntexSpaNetworkLayer:
         self.writer: asyncio.StreamWriter = None
 
     async def _async_connect(self) -> None:
-        """Initialize a connection to the spa"""
+        """Initialize a connection to the spa."""
         _LOGGER.debug(
             "Opening TCP connection with the spa at %s:%s with asyncio...",
             self.address,
@@ -66,7 +69,7 @@ class IntexSpaNetworkLayer:
         )
 
     async def _async_disconnect(self) -> None:
-        """Close the connection to the spa"""
+        """Close the connection to the spa."""
         # If there is a writer to send a disconnect message
         try:
             _LOGGER.debug("Closing previous TCP connection to the spa with asyncio...")
@@ -84,11 +87,11 @@ class IntexSpaNetworkLayer:
             self.writer = None
 
     async def async_force_disconnect(self) -> None:
-        """Force reconnecting to the spa"""
+        """Force reconnecting to the spa."""
         await self._async_disconnect()
 
     async def async_send(self, bytes_to_write: bytes = None) -> None:
-        """Send command to the spa"""
+        """Send command to the spa."""
         if self.writer is None or self.reader is None:
             _LOGGER.info("Not connected to the spa, trying to connect...")
             await self._async_connect()
@@ -102,7 +105,7 @@ class IntexSpaNetworkLayer:
         await self.writer.drain()
 
     async def async_receive(self) -> None:
-        """Receive response from the spa"""
+        """Receive response from the spa."""
         response_as_bytes = await self.reader.readline()
         _LOGGER.debug("Receiving bytes from the spa: %s", response_as_bytes)
         return response_as_bytes

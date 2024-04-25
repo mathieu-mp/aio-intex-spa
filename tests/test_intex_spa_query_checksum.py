@@ -1,3 +1,5 @@
+"""Load checksum tests."""
+
 from aio_intex_spa.intex_spa_query import IntexSpaQuery
 
 import pytest
@@ -15,6 +17,7 @@ invalid_status_responses = [
 
 @pytest.mark.parametrize("status_response", valid_status_responses)
 def test_valid_intex_spa_checksums(status_response):
+    """Assert provided checksums are considered valid."""
     query = IntexSpaQuery(intent="status")
     query.intex_timestamp = "12345678901234"
     query.render_response_data(received_bytes=status_response)
@@ -22,6 +25,7 @@ def test_valid_intex_spa_checksums(status_response):
 
 @pytest.mark.parametrize("status_response", invalid_status_responses)
 def test_invalid_intex_spa_checksums(status_response):
+    """Assert provided checksums are considered invalid."""
     query = IntexSpaQuery(intent="status")
     query.intex_timestamp = "12345678901234"
     with pytest.raises(AssertionError):

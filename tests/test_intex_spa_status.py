@@ -1,3 +1,5 @@
+"""Load Status parsing tests."""
+
 from aio_intex_spa.intex_spa_object_status import IntexSpaStatus
 
 

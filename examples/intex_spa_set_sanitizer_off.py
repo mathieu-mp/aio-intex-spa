@@ -1,4 +1,5 @@
-"""Usage example: Set spa sanitizer off"""
+"""Usage example: Set spa sanitizer off."""
+
 import os
 import logging
 import asyncio
@@ -11,7 +12,7 @@ logging.basicConfig(level=logging.DEBUG)
 
 
 async def set_spa_sanitizer_off():
-    """Set spa sanitizer off"""
+    """Set spa sanitizer off."""
     spa = IntexSpa(SPA_ADDRESS)
 
     print(await spa.async_set_sanitizer(False))

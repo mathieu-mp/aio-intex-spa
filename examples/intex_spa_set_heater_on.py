@@ -1,4 +1,5 @@
-"""Usage example: Set spa heater on"""
+"""Usage example: Set spa heater on."""
+
 import os
 import logging
 import asyncio
@@ -11,7 +12,7 @@ logging.basicConfig(level=logging.DEBUG)
 
 
 async def set_spa_heater_on():
-    """Set spa heater on"""
+    """Set spa heater on."""
     spa = IntexSpa(SPA_ADDRESS)
 
     print(await spa.async_set_heater())
