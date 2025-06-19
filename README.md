@@ -65,7 +65,7 @@ For Changelog, please read [releases].
 [pypilink]: https://pypi.org/project/aio-intex-spa/
 [pypibadge]: https://badge.fury.io/py/aio-intex-spa.svg
 [releases]: https://github.com/mathieu-mp/aio-intex-spa/releases
-[maintenance-shield]: https://img.shields.io/maintenance/yes/2024.svg
+[maintenance-shield]: https://img.shields.io/maintenance/yes/2025.svg
 [devcontainer]: https://vscode.dev/redirect?url=vscode://ms-vscode-remote.remote-containers/cloneInVolume?url=https://github.com/mathieu-mp/aio-intex-spa
 [devcontainer-badge]: https://img.shields.io/static/v1?label=Remote%20-%20Containers&message=Open&color=blue&logo=visualstudiocode
 
